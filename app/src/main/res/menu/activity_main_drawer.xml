@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/grupCust">
+        <item
+            android:id="@+id/masterKos"
+            android:icon="@mipmap/ic_action_home"
+            android:title="Master Kos" />
+        <item
+            android:id="@+id/bookingKos"
+            android:icon="@mipmap/ic_action_armchair"
+            android:title="Booking Kos" />
+        <item
+            android:id="@+id/dataSewaKos"
+            android:icon="@mipmap/ic_action_users"
+            android:title="List Penyewa" />
+        <item
+            android:id="@+id/masterbank"
+            android:icon="@mipmap/ic_action_creditcard"
+            android:title="Master Rekening" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/grupUser">
+        <item
+            android:id="@+id/menuListKos"
+            android:icon="@mipmap/ic_action_home"
+            android:title="Cari Kos" />
+        <item
+            android:id="@+id/menuListImage"
+            android:icon="@mipmap/ic_action_box"
+            android:title="Image List Kos" />
+        <item
+            android:id="@+id/menuBooking"
+            android:icon="@mipmap/ic_action_armchair"
+            android:title="Booking" />
+        <item
+            android:id="@+id/menuMap"
+            android:icon="@mipmap/ic_action_globe"
+            android:title="Map" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menuLogout"
+            android:icon="@mipmap/ic_action_exit"
+            android:title="Logout" />
+
+    </group>
+    <!--<item android:title="Communicate">
+        <menu>
+
+        </menu>
+    </item> -->
+
+</menu>

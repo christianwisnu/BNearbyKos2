@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/MarginLayout"
+        android:background="@drawable/cardstore"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ImgColHDGambar"
+                android:layout_width="@dimen/HWImgProfile"
+                android:layout_height="@dimen/HWImgProfile"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_action_person" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="@dimen/MarginLayout"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/TvColHDNamaKos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Medium Text"
+                        android:textSize="20dp"
+                        android:textColor="@color/md_black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/TvColHDAlamat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/md_black"
+                        android:text="Small Text"
+                        android:textSize="13dp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/MarginLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayoutku"
+        android:orientation="horizontal"
+        android:layout_marginTop="-20dp">
+
+        <TextView
+            android:id="@+id/TvColMobilItems"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/cardcyclewhite"
+            android:gravity="center"
+            android:text="10"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/ImgColHDEdit"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/slctcyclewhitecard"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_action_creditcard" />
+
+        <ImageView
+            android:id="@+id/ImgColHDDelete"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/slctcyclewhitecard"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_action_trash" />
+    </LinearLayout>
+
+</LinearLayout>

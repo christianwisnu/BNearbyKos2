@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ImgColListBookingUserKos"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_action_person" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="@dimen/MarginLayout"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/TvColListBookingUserKosNama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Medium Text"
+                    android:textSize="17dp"
+                    android:textColor="@color/md_black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/TvColListBookingUserKosAlamat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_black"
+                    android:text="Small Text"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/TvColListBookingUserKosStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Small Text"
+                    android:textStyle="bold"
+                    android:textSize="13dp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/MarginLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="-20dp"
+        android:layout_marginLeft="50dp">
+
+        <TextView
+            android:id="@+id/TvColBookingUserDP"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/cardcyclewhite"
+            android:gravity="center"
+            android:text="DP"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+    </LinearLayout>
+
+</LinearLayout>

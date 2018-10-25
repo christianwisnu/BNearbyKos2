@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="@color/md_red_900"
+        android:layout_height="@dimen/actionbar_dimen">
+
+        <ImageView
+            android:layout_width="@dimen/actionbar_dimen"
+            android:layout_height="@dimen/actionbar_dimen"
+            android:scaleType="centerInside"
+            android:id="@+id/imgBackKriteriaKos"
+            android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha" />
+
+        <TextView
+            style="@style/text_large_bold"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/White_Snow"
+            android:text="Cari Kos" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_margin="@dimen/MarginLayout"
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tipe"
+                android:layout_marginTop="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spKriteriaTipeKos"
+                android:entries="@array/peruntukan"
+                android:prompt="@string/country_prompt"/>
+
+            <!--<TextView
+                style="@style/text_medium_normal"
+                android:text="Kota"
+                android:layout_marginTop="10dp"/>
+
+            <LinearLayout
+                android:background="@drawable/cardstore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/eKriteriaKotaKos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/bKriteriaKotaKos"
+                        android:background="@drawable/cardstore"
+                        android:ems="10"
+                        android:enabled="false"/>
+
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bKriteriaKotaKos"
+                        android:background="@mipmap/ic_action_database"
+                        android:layout_gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ckAllKota"
+                android:text="Semua Kota"
+                android:textSize="17dp"/>-->
+
+            <TextView
+                style="@style/text_medium_normal"
+                android:text="Fasilitas"
+                android:layout_marginTop="10dp"/>
+
+            <LinearLayout
+                android:background="@drawable/cardstore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/eKriteriaFasilitasKos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/bKriteriaFasilitasKos"
+                        android:background="@drawable/cardstore"
+                        android:ems="10"
+                        android:enabled="false"/>
+
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bKriteriaFasilitasKos"
+                        android:background="@mipmap/ic_action_database"
+                        android:layout_gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ckAllFasilitas"
+                android:text="Semua Fasilitas"
+                android:textSize="17dp"/>
+
+            <TextView
+                style="@style/text_medium_normal"
+                android:text="Mulai Harga"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:id="@+id/eKriteriaMulaiHargaKos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cardstore"
+                android:ems="10"
+                android:text="0"
+                android:inputType="number"/>
+
+            <TextView
+                style="@style/text_medium_normal"
+                android:text="Sampai Harga"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:id="@+id/eKriteriaSampaiHargaKos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cardstore"
+                android:ems="10"
+                android:text="0"
+                android:inputType="number"/>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ckAllHarga"
+                android:text="Semua Harga"
+                android:textSize="17dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="@color/md_red_900"
+        android:layout_marginTop="-50dp"
+        android:layout_height="@dimen/actionbar_dimen">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/White_Snow"
+            android:text="Cari"
+            android:id="@+id/txtKriteriaCari"/>
+
+    </LinearLayout>
+
+</LinearLayout>

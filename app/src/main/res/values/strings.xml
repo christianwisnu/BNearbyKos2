@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">ITS KOS</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">About ITS Kos</string>
+    <string name="err_msg_name">Enter your full name</string>
+    <string name="err_msg_user_name">Enter your user name</string>
+    <string name="err_msg_pasw">Enter your password</string>
+
+    <string name="err_msg_namakos">Nama Kos tidak boleh kosong</string>
+    <string name="err_msg_hargakos">Harga kamar Kos tidak boleh kosong</string>
+    <string name="err_msg_lebarkos">Lebar kamar Kos tidak boleh kosong</string>
+    <string name="err_msg_panjangkos">Panjang kamar Kos tidak boleh kosong</string>
+    <string name="err_msg_jmlkamar">Jumlah kamar Kos tidak boleh kosong</string>
+    <string name="err_msg_fasilitas">Fasilitas Kos tidak boleh kosong</string>
+    <string name="err_msg_alamatkos">Alamat Kos tidak boleh kosong</string>
+    <string name="err_msg_fotokos">Harap cantumkan salah satu gambar kos</string>
+    <string name="err_msg_sisakos">Sisa Kamar harap di isi</string>
+    <string name="err_msg_kotakos">Kota tidak boleh kosong</string>
+
+    <string name="err_msg_namabank">Bank wajib diisi</string>
+    <string name="err_msg_norek">No Rekening wajib diisi</string>
+
+    <string name="country_prompt">Pilih salah satu</string>
+
+    <string-array name="country_arrays">
+        <item>User</item>
+        <item>Customer</item>
+    </string-array>
+
+    <string-array name="status_listrik">
+        <item>Include</item>
+        <item>Exclude</item>
+    </string-array>
+
+    <string-array name="peruntukan">
+        <item>Man Only</item>
+        <item>Women Only</item>
+        <item>All</item>
+    </string-array>
+</resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/scroll_view"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" >
+
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<LinearLayout
+			android:background="@color/md_blue_600"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical" >
+
+			<TextView
+				android:layout_gravity="center"
+				android:textStyle="bold"
+				android:textColor="@color/md_white"
+				android:id="@+id/TvHeaderProfile"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/HWImgProfile"
+				android:text="ITS KOS"
+				android:textAppearance="?android:attr/textAppearanceLarge" />
+
+			<TextView
+				android:textColor="@color/md_white"
+				android:layout_gravity="center"
+				android:id="@+id/BUpbCamera"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Please your choose login or signup"
+				android:textAppearance="?android:attr/textAppearanceSmall" />
+
+		</LinearLayout>
+
+		<com.astuetz.PagerSlidingTabStrip
+			android:id="@+id/PgsSignup"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/actionbar_dimen"
+			android:layout_below="@+id/lytHeadMain"
+			android:background="@color/md_blue_600"
+			app:pstsDividerColor="@color/md_blue_100"
+			app:pstsIndicatorColor="@color/md_blue_300"
+			app:pstsShouldExpand="true"
+			app:pstsTextAllCaps="true" />
+
+		<android.support.v4.view.ViewPager
+			android:scrollbars="vertical"
+			android:layout_below="@+id/PgsSignup"
+			android:id="@+id/VprSignup"
+			android:layout_width="match_parent"
+			android:layout_height="800dp"
+			android:isScrollContainer="true"/>
+
+	</LinearLayout>
+
+</ScrollView>
+

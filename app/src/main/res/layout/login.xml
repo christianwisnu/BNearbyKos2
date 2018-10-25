@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/Blue_AliceBlue"
+    android:descendantFocusability="beforeDescendants"
+  	android:focusableInTouchMode="true" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/input_layout_loginusername"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+				<EditText
+					android:id="@+id/eLoginUserName"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="User name" />
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/input_layout_loginpasw"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+				<EditText
+					android:id="@+id/eLoginPassword"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:inputType="textPassword"
+					android:hint="Password" />
+
+			</android.support.design.widget.TextInputLayout>
+
+			<TextView
+				android:textStyle="bold"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Login Sebagai: "
+				android:textAppearance="?android:attr/textAppearanceMedium" />
+
+				<Spinner
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/spLoginLogin"
+					android:entries="@array/country_arrays"
+					android:prompt="@string/country_prompt"/>
+
+  		<Button        
+  		    android:textStyle="bold"
+  		    android:background="@drawable/slctbluebutton"
+  		    android:layout_gravity="center"
+  		    android:layout_marginTop="@dimen/MarginButton"
+  		    android:textAppearance="?android:attr/textAppearanceLarge" 
+	        android:id="@+id/bLoginLogin"
+	        android:layout_width="@dimen/WButton"
+	        android:layout_height="wrap_content"
+	        android:text="Login" />
+        </LinearLayout>
+
+
+  
+
+</LinearLayout>
