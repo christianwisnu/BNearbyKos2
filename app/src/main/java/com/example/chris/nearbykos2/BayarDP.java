@@ -211,24 +211,26 @@ public class BayarDP extends Activity {
         try{
             JSONObject json = new JSONObject(result);
             if(json.getString("errorcode").equals("0")){
-                //Toast.makeText(ListDataServerActivity.this, json.getString("errormsg"), Toast.LENGTH_SHORT).show();
-            }
-            listJenis = new ArrayList<HashMap<String, String>>();
-            JSONArray datameja= json.getJSONArray("datakain");
-            for (int i=0; i<datameja.length(); i++){
-                JSONObject jsonobj =datameja.getJSONObject(i);
-                HashMap<String, String> map = new HashMap<String, String>();
-                map.put("i_idcust", jsonobj.getString("i_idcust"));
-                map.put("kode_bank", jsonobj.getString("kode_bank"));
-                map.put("nama_bank", jsonobj.getString("nama_bank"));
-                map.put("i_line", jsonobj.getString("i_line"));
-                map.put("vc_norek", jsonobj.getString("vc_norek"));
-                listJenis.add(map);
-            }
+                Toast.makeText(BayarDP.this, "Pemilik Kos belum mempunyai rekening Bank!\nHubungi langsung pemilik kos.", Toast.LENGTH_LONG).show();
+                finish();
+            }else{
+                listJenis = new ArrayList<HashMap<String, String>>();
+                JSONArray datameja= json.getJSONArray("datakain");
+                for (int i=0; i<datameja.length(); i++){
+                    JSONObject jsonobj =datameja.getJSONObject(i);
+                    HashMap<String, String> map = new HashMap<String, String>();
+                    map.put("i_idcust", jsonobj.getString("i_idcust"));
+                    map.put("kode_bank", jsonobj.getString("kode_bank"));
+                    map.put("nama_bank", jsonobj.getString("nama_bank"));
+                    map.put("i_line", jsonobj.getString("i_line"));
+                    map.put("vc_norek", jsonobj.getString("vc_norek"));
+                    listJenis.add(map);
+                }
 
-            ARRJENIS = new String[listJenis.size()];
-            for (int i = 0; i < listJenis.size(); i++) {
-                ARRJENIS[i]=listJenis.get(i).get("nama_bank")+"--"+listJenis.get(i).get("vc_norek");
+                ARRJENIS = new String[listJenis.size()];
+                for (int i = 0; i < listJenis.size(); i++) {
+                    ARRJENIS[i]=listJenis.get(i).get("nama_bank")+"--"+listJenis.get(i).get("vc_norek");
+                }
             }
         } catch (JSONException e) {
             Log.e("log_tag", "Error parsing data " + e.toString());
