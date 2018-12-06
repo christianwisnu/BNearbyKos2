@@ -1,11 +1,15 @@
 package com.example.chris.nearbykos2;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +44,7 @@ import control.GPSTracker;
  */
 
 public class Map extends FragmentActivity implements
-        GoogleMap.OnMapClickListener, com.google.android.gms.location.LocationListener,
+        GoogleMap.OnMapClickListener, com.google.android.gms.location.LocationListener, OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mGoogleMap;
@@ -60,6 +64,7 @@ public class Map extends FragmentActivity implements
     private int Tag=1;
     private Button btnOk;
     private TextView txtAlamat;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
@@ -150,10 +155,13 @@ public class Map extends FragmentActivity implements
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkLocationPermission();
+        }
         SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.frgMaps);
-        mGoogleMap=fm.getMap();
-        ImgLocation.performClick();
+        fm.getMapAsync(this);
+        /*ImgLocation.performClick();
         mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
         mGoogleMap.getUiSettings().setCompassEnabled(true);
         // Showing / hiding your current location
@@ -171,10 +179,76 @@ public class Map extends FragmentActivity implements
         mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(13), 200, null);
 
-        mGoogleMap.setOnMapClickListener(this);
-
+        mGoogleMap.setOnMapClickListener(this);*/
     }
 
+    public boolean checkLocationPermission(){
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Asking user if explanation is needed
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+                //Prompt the user once explanation has been shown
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+
+        //Initialize Google Play Services
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                //buildGoogleApiClient();
+                mGoogleMap.setMyLocationEnabled(true);
+            }
+        }
+        else {
+            //buildGoogleApiClient();
+            mGoogleMap.setMyLocationEnabled(true);
+        }
+        ImgLocation.performClick();
+        mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
+        mGoogleMap.getUiSettings().setCompassEnabled(true);
+        // Showing / hiding your current location
+        mGoogleMap.setMyLocationEnabled(true);
+        // Enable / Disable zooming controls
+        // Enable / Disable my location button
+        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        // Enable / Disable Compass icon
+        mGoogleMap.getUiSettings().setCompassEnabled(true);
+        // Enable / Disable Rotate gesture
+        mGoogleMap.getUiSettings().setRotateGesturesEnabled(true);
+        // Enable / Disable zooming functionality
+        mGoogleMap.getUiSettings().setZoomGesturesEnabled(true);
+        //Enable / Disable Button Zooming
+        mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(13), 200, null);
+        mGoogleMap.setOnMapClickListener(this);
+    }
 
     @Override
     public void onMapClick(LatLng point) {
@@ -245,21 +319,20 @@ public class Map extends FragmentActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop fired ..............");
         mGoogleApiClient.disconnect();
-        Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.d(TAG, "onConnected - isConnected ...............: " + mGoogleApiClient.isConnected());
-        startLocationUpdates();
-    }
-
-    protected void startLocationUpdates() {
-        PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, this);
-        Log.d(TAG, "Location update started ..............: ");
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        }
     }
 
     @Override
@@ -274,14 +347,14 @@ public class Map extends FragmentActivity implements
         Log.d(TAG, "Location update stopped .......................");
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         if (mGoogleApiClient.isConnected()) {
             startLocationUpdates();
             Log.d(TAG, "Location update resumed .....................");
         }
-    }
+    }*/
 
     @Override
     public void onConnectionSuspended(int i) {

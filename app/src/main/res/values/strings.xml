@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">ITS KOS</string>
+    <string name="app_name">UNTAG KOS</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">About ITS Kos</string>
+    <string name="action_settings">About UNTAG Kos</string>
     <string name="err_msg_name">Enter your full name</string>
     <string name="err_msg_user_name">Enter your user name</string>
     <string name="err_msg_pasw">Enter your password</string>
@@ -41,4 +41,5 @@
         <item>Women Only</item>
         <item>All</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
 </resources>

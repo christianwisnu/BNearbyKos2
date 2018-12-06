@@ -24,6 +24,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -39,7 +40,7 @@ import model.ColCustomer;
 import model.ColUser;
 import session.SessionManager;
 
-public class Login extends Fragment{
+public class Login extends android.support.v7.app.AppCompatActivity{
 
 	private String LoginCust				="loginCust.php";
 	private String LoginUser				="loginUser.php";
@@ -52,19 +53,24 @@ public class Login extends Fragment{
 	private ProgressDialog dialog;
 	private TextInputLayout inputLayoutName, inputLayoutPasw;
 	private Spinner spLogin;
+	private TextView txtRegister;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, 
-    		Bundle savedInstanceState) {
-    	View vwlogin	= inflater.inflate(R.layout.login,container,false);
-		session		= new SessionManager(getActivity());
-		bLogin		= (Button)vwlogin.findViewById(R.id.bLoginLogin);
-		inputLayoutName = (TextInputLayout)vwlogin.findViewById(R.id.input_layout_loginusername);
-		inputLayoutPasw = (TextInputLayout)vwlogin.findViewById(R.id.input_layout_loginpasw);
-		eNama		= (EditText)vwlogin.findViewById(R.id.eLoginUserName);
-		ePassword	= (EditText)vwlogin.findViewById(R.id.eLoginPassword);
-		spLogin = (Spinner) vwlogin.findViewById(R.id.spLoginLogin);
-        Animation animFadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.login);
+        dialog = new ProgressDialog(this);
+        dialog.setCancelable(false);
+
+		session		= new SessionManager(this);
+		bLogin		= (Button)findViewById(R.id.bLoginLogin);
+		inputLayoutName = (TextInputLayout)findViewById(R.id.input_layout_loginusername);
+		inputLayoutPasw = (TextInputLayout)findViewById(R.id.input_layout_loginpasw);
+		eNama		= (EditText)findViewById(R.id.eLoginUserName);
+		ePassword	= (EditText)findViewById(R.id.eLoginPassword);
+		spLogin = (Spinner) findViewById(R.id.spLoginLogin);
+		txtRegister = (TextView) findViewById(R.id.txtRegister);
+        Animation animFadeIn = AnimationUtils.loadAnimation(this, R.anim.slide_down);
         animFadeIn.setDuration(1000);
         animFadeIn.setStartOffset(1000);
         animFadeIn.setFillAfter(true);
@@ -78,9 +84,6 @@ public class Login extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				dialog = new ProgressDialog(getActivity());
-				dialog.setCancelable(true);
 				dialog.setMessage("CHECK ID ANDA ...");
 				if(String.valueOf(spLogin.getSelectedItem()).equals("User")){
 					SingUp(Link.FilePHP + LoginUser);
@@ -89,11 +92,15 @@ public class Login extends Fragment{
 					SingUp(Link.FilePHP + LoginCust);
 					Log.i("LINK",Link.FilePHP + LoginCust);
 				}
-
 			}
 		});
-		return vwlogin;
-		
+
+		txtRegister.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(Login.this, Register.class));
+			}
+		});
 	}
 
 	private class MyTextWatcher implements TextWatcher {
@@ -146,7 +153,7 @@ public class Login extends Fragment{
 
 	private void requestFocus(View view) {
 		if (view.requestFocus()) {
-			getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+			this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 		}
 	}
 
@@ -201,18 +208,18 @@ public class Login extends Fragment{
 											columnlistCust.get(0).getTelp(), columnlistCust.get(0).getEmail(), status, true);
 								}
 
-								Intent i = new Intent(getActivity(), MainActivity.class);
+								Intent i = new Intent(Login.this, MainActivity.class);
 								startActivityForResult(i, 5000);
-								getActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
-								getActivity().finish();
+								overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
+								finish();
 							}else{
-								Toast.makeText(getActivity(),
+								Toast.makeText(Login.this,
 										"Gagal Coba Lagi", Toast.LENGTH_LONG)
 										.show();
 								dialog.dismiss();
 							}
 						} catch (Exception e) {
-							Toast.makeText(getActivity(),
+							Toast.makeText(Login.this,
 									e.getMessage(), Toast.LENGTH_LONG)
 									.show();
 							dialog.dismiss();
@@ -244,7 +251,4 @@ public class Login extends Fragment{
 		AppController.getInstance().getRequestQueue().getCache().invalidate(save, true);
 		AppController.getInstance().addToRequestQueue(simpan);
 	}
-
-
-
 }

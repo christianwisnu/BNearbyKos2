@@ -37,7 +37,7 @@ public class Splash extends Activity {
 		//Utils.loadGifIntoImageView(ImgTop, R.drawable.icon, Splash.this);
 		
 		if(session.isLoggedIn()==false){
-			Intent i =new Intent(getApplicationContext(), SignUp.class);
+			Intent i =new Intent(getApplicationContext(), Login.class);
 			startActivity(i);
 			finish();
 		}else if (session.isLoggedIn()==true){

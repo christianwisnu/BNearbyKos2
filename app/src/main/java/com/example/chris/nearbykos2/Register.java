@@ -1,10 +1,12 @@
 package com.example.chris.nearbykos2;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -38,7 +40,7 @@ import model.ColUser;
 import session.SessionManager;
 
 
-public class Register extends Fragment {
+public class Register extends AppCompatActivity {
 
 	private String registerCust = "addCust.php";
 	private String registerUser = "addUser.php";
@@ -55,25 +57,28 @@ public class Register extends Fragment {
 	private String tipeLogin,slasid;
 
 	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState) {
-    	session		= new SessionManager(getActivity());
-    	View vwregister	= inflater.inflate(R.layout.register,container,false);
-		inputLayoutName = (TextInputLayout)vwregister.findViewById(R.id.input_layout_nama);
-		inputLayoutTelp = (TextInputLayout)vwregister.findViewById(R.id.input_layout_telp);
-		inputLayoutEmail = (TextInputLayout)vwregister.findViewById(R.id.input_layout_email);
-		inputLayoutUserName = (TextInputLayout)vwregister.findViewById(R.id.input_layout_username);
-		inputLayoutPasw = (TextInputLayout)vwregister.findViewById(R.id.input_layout_pasw);
+    public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.register);
+    	session		= new SessionManager(this);
+		dialog = new ProgressDialog(Register.this);
+		dialog.setCancelable(false);
 
-		eNama		= (EditText)vwregister.findViewById(R.id.input_nama);
-		eTelp		= (EditText)vwregister.findViewById(R.id.input_telp);
-		eEmail		= (EditText)vwregister.findViewById(R.id.input_email);
-		eusername	= (EditText)vwregister.findViewById(R.id.input_username);
-		ePassword	= (EditText)vwregister.findViewById(R.id.input_pasw);
-		spjurusan = (Spinner) vwregister.findViewById(R.id.spRegisterLogin);
-		bSingup		= (Button)vwregister.findViewById(R.id.bRegisterSave);
+		inputLayoutName = (TextInputLayout)findViewById(R.id.input_layout_nama);
+		inputLayoutTelp = (TextInputLayout)findViewById(R.id.input_layout_telp);
+		inputLayoutEmail = (TextInputLayout)findViewById(R.id.input_layout_email);
+		inputLayoutUserName = (TextInputLayout)findViewById(R.id.input_layout_username);
+		inputLayoutPasw = (TextInputLayout)findViewById(R.id.input_layout_pasw);
 
-        Animation animFadeIn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
+		eNama		= (EditText)findViewById(R.id.input_nama);
+		eTelp		= (EditText)findViewById(R.id.input_telp);
+		eEmail		= (EditText)findViewById(R.id.input_email);
+		eusername	= (EditText)findViewById(R.id.input_username);
+		ePassword	= (EditText)findViewById(R.id.input_pasw);
+		spjurusan = (Spinner) findViewById(R.id.spRegisterLogin);
+		bSingup		= (Button)findViewById(R.id.bRegisterSave);
+
+        Animation animFadeIn = AnimationUtils.loadAnimation(this, R.anim.slide_down);
         animFadeIn.setDuration(1000);
         animFadeIn.setStartOffset(1000);
         animFadeIn.setFillAfter(true);
@@ -88,9 +93,6 @@ public class Register extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				dialog = new ProgressDialog(getActivity());
-				dialog.setCancelable(true);
-				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 				dialog.setMessage("Register ...");
 				tipeLogin = String.valueOf(spjurusan.getSelectedItem());
 				if(tipeLogin.equals("User")){
@@ -100,9 +102,6 @@ public class Register extends Fragment {
 				}
 			}
 		});
-		
-
-		return vwregister;
 	}
 
 	private class MyTextWatcher implements TextWatcher {
@@ -169,7 +168,7 @@ public class Register extends Fragment {
 
 	private void requestFocus(View view) {
 		if (view.requestFocus()) {
-			getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 		}
 	}
 
@@ -191,20 +190,21 @@ public class Register extends Fragment {
 						}else{
 							status="CUST";
 						}
-                        /*session.createLoginSession(0, eusername.getText().toString(),
-                                eNama.getText().toString(), eTelp.getText().toString(),
-								eEmail.getText().toString(), status);
-                        Intent i = new Intent(getActivity(), MainActivity.class);
+                        session.setLogin(true);
+                        session.createLoginSession(columnlist.get(0).getIdUser(), columnlist.get(0).getUserName(),
+                                columnlist.get(0).getNamaLengkap(),
+                                columnlist.get(0).getTelp(), columnlist.get(0).getEmail(), status, true);
+                        Intent i = new Intent(Register.this, MainActivity.class);
                         startActivityForResult(i, 5000);
-                        getActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
-                        getActivity().finish();*/
-						refresh();
+                        overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
+                        finish();
+						/*refresh();
 						dialog.cancel();
-						Toast.makeText(getActivity(),
+						Toast.makeText(Register.this,
 								"Register berhasil. \nMasuk melalui menu LOGIN!", Toast.LENGTH_LONG)
-								.show();
+								.show();*/
 					}else{
-						Toast.makeText(getActivity(),
+						Toast.makeText(Register.this,
 								"Gagal Coba Lagi", Toast.LENGTH_LONG)
 								.show();
 					}

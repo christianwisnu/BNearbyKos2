@@ -26,7 +26,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/HWImgProfile"
-				android:text="ITS KOS"
+				android:text="UNTAG KOS"
 				android:textAppearance="?android:attr/textAppearanceLarge" />
 
 			<TextView
@@ -40,7 +40,7 @@
 
 		</LinearLayout>
 
-		<com.astuetz.PagerSlidingTabStrip
+		<com.astuetz.viewpager.extensions.PagerSlidingTabStrip
 			android:id="@+id/PgsSignup"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/actionbar_dimen"

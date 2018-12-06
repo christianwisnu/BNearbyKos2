@@ -57,12 +57,12 @@ public class SignUp extends FragmentActivity{
 		@Override
 		public  Fragment getItem(int position) {
 			//return SuperAwesomeCardFragment.newInstance(position);			
-			switch (position) {
+			/*switch (position) {
 			case 0:				
 				return new Register();						
 			case 1:				
 				return new Login();			
-			}
+			}*/
 			return null;
 
 		}

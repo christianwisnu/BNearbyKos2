@@ -15,7 +15,7 @@
             android:layout_height="@dimen/actionbar_dimen"
             android:scaleType="centerInside"
             android:id="@+id/imgBackKriteriaKos"
-            android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha" />
+            android:src="@mipmap/ic_action_arrow_left_black" />
 
         <TextView
             style="@style/text_large_bold"

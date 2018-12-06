@@ -198,8 +198,8 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
                 .addApi(AppIndex.API).build();
         SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.frgMapsInfoKos);
         fm.getMapAsync(this);
-        mGoogleMap = fm.getMap();
-        mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
+
+        /*mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
         mGoogleMap.getUiSettings().setCompassEnabled(true);
         // Showing / hiding your current location
         mGoogleMap.setMyLocationEnabled(true);
@@ -215,7 +215,7 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
         //Enable / Disable Button Zooming
         mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(13), 200, null);
-        createLocationRequest();
+        createLocationRequest();*/
 
         telefon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -342,6 +342,25 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
         //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,200));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
         //mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel), 200, null);
+
+
+        mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
+        mGoogleMap.getUiSettings().setCompassEnabled(true);
+        // Showing / hiding your current location
+        //mGoogleMap.setMyLocationEnabled(true);
+        // Enable / Disable zooming controls
+        // Enable / Disable my location button
+        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        // Enable / Disable Compass icon
+        mGoogleMap.getUiSettings().setCompassEnabled(true);
+        // Enable / Disable Rotate gesture
+        mGoogleMap.getUiSettings().setRotateGesturesEnabled(true);
+        // Enable / Disable zooming functionality
+        mGoogleMap.getUiSettings().setZoomGesturesEnabled(true);
+        //Enable / Disable Button Zooming
+        mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(13), 200, null);
+        createLocationRequest();
     }
 
     private void GetCountData(String Url){

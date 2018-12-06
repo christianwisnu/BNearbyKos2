@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="ITS Kos"
+        android:text="UNTAG Kos"
         android:textColor="@color/White_Azure"
         android:textSize="30dp" />
 </LinearLayout>

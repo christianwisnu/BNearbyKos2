@@ -15,13 +15,13 @@
             android:layout_height="@dimen/actionbar_dimen"
             android:scaleType="centerInside"
             android:id="@+id/ImbAddKosBack"
-            android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha" />
+            android:src="@mipmap/ic_action_arrow_left_black" />
 
         <TextView
             style="@style/text_large_bold"
             android:layout_gravity="center_vertical"
             android:textColor="@color/White_Snow"
-            android:text="ITS Kos"
+            android:text="UNTAG Kos"
             android:id="@+id/TvAddTittleCustomer" />
     </LinearLayout>
 
