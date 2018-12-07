@@ -2,17 +2,13 @@ package com.example.chris.nearbykos2;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -39,7 +35,6 @@ import control.Link;
 import model.ColUser;
 import session.SessionManager;
 
-
 public class Register extends AppCompatActivity {
 
 	private String registerCust = "addCust.php";
@@ -47,7 +42,6 @@ public class Register extends AppCompatActivity {
 	private EditText eNama, eEmail, ePassword, eusername, eTelp;
 	private ProgressDialog dialog;
 	private Button bSingup;
-	private String TAG = SignUp.class.getName();
 	private ArrayList<ColUser> columnlist = new ArrayList<ColUser>();
 	private SessionManager session;
 	private String simage="none.jpg";
@@ -216,7 +210,7 @@ public class Register extends AppCompatActivity {
 		}, new Response.ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				VolleyLog.d(TAG, error.toString());
+
 			}
 		}){
 			@Override

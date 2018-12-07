@@ -85,7 +85,6 @@ public class FListKos extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> Parent, View view, int position,
                                     long id) {
-                // TODO Auto-generated method stub
                 Intent i = new Intent(getActivity(), InfoKos.class);
                 i.putExtra("id_kos", columnlist.get(position).getId_kos());
                 i.putExtra("idUser", idUser);

@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+        //Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -172,9 +172,9 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(this, SearchKriteriaKos.class);
             startActivityForResult(i,2);
         } else if (id == R.id.menuBooking) {
-            //changeFragmentListUploadUserKriteria(new FListBookingUser(), String.valueOf(sid));
-            Intent i  = new Intent(this, MapsActivity.class);
-            startActivity(i);
+            changeFragmentListUploadUserKriteria(new FListBookingUser(), String.valueOf(sid));
+            //Intent i  = new Intent(this, MapsActivity.class);
+            //startActivity(i);
         } else if (id == R.id.menuMap) {
             getDataUpload(Link.FilePHP+getData);
         } else if(id == R.id.menuLogout){

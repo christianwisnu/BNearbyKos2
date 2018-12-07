@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.example.chris.nearbykos2.SignUp;
+import com.example.chris.nearbykos2.LoginActivity;
 
 
 public class SessionManager {
@@ -60,26 +60,6 @@ public class SessionManager {
 		editor.commit();
 	}
 
-	/**
-	 * Check login method wil check user login status
-	 * If false it will redirect user to login page
-	 * Else won't do anything
-	 * */
-	public void checkLogin(){
-		// Check login status
-		if(!this.isLoggedIn()){
-			// user is not logged in redirect him to Login Activity
-			Intent i = new Intent(_context, SignUp.class);
-			// Closing all the Activities
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-			// Add new Flag to start new Activity
-			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-			// Staring Login Activity
-			_context.startActivity(i);
-		}
-	}
 
 	/**
 	 * Get stored session data
@@ -120,7 +100,7 @@ public class SessionManager {
 		setLogin(false);
 		createLoginSession(0, null, null, null, null,
 				null, false);
-		Intent i = new Intent(_context, SignUp.class);
+		Intent i = new Intent(_context, LoginActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		_context.startActivity(i);

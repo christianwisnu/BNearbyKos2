@@ -2,7 +2,10 @@ package control;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 
 import com.example.chris.nearbykos2.MapAllKos;
 import com.example.chris.nearbykos2.R;
@@ -35,10 +38,8 @@ public class CustomClusterRenderer extends DefaultClusterRenderer<MapAllKos.Stri
     @Override
     protected void onBeforeClusterItemRendered(MapAllKos.StringClusterItem item,
                                                          MarkerOptions markerOptions) {
-
-        final BitmapDescriptor markerDescriptor =
-                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
-
+        //EDIT DULU SEUKURAN home
+        final BitmapDescriptor markerDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.home);
         markerOptions.icon(markerDescriptor).snippet(item.getTitle());
     }
 
@@ -48,9 +49,7 @@ public class CustomClusterRenderer extends DefaultClusterRenderer<MapAllKos.Stri
 
         mClusterIconGenerator.setBackground(
                 ContextCompat.getDrawable(mContext, R.drawable.background_circle));
-
         mClusterIconGenerator.setTextAppearance(R.style.AppTheme_WhiteTextAppearance);
-
         final Bitmap icon = mClusterIconGenerator.makeIcon(String.valueOf(cluster.getSize()));
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon));
     }

@@ -40,8 +40,6 @@ public class AdpListBookingUser extends ArrayAdapter<ColHomeBooking>  {
     private static final int SEND_UPLOAD = 201;
     private String slasid;
 
-
-
     public AdpListBookingUser(Context context, int resource, List<ColHomeBooking> objects) {
         super(context, resource,  objects);
         this.context = context;

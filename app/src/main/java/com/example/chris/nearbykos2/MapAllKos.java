@@ -2,6 +2,7 @@ package com.example.chris.nearbykos2;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Icon;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -35,6 +37,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -48,6 +51,7 @@ import control.GPSTracker;
 import model.ClusterMarkerLocation;
 import model.ColHomeDetail;
 import java.lang.reflect.Type;
+import java.util.Set;
 
 /**
  * Created by christian on 20/07/17.
@@ -169,6 +173,96 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
 
     }
 
+    /*@Override
+    protected void onBeforeClusterItemRendered(StringClusterItem item, MarkerOptions markerOptions) {
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(R.drawable.pipet_home));
+    }
+
+    /*@Override
+    public void onAdd() {
+
+    }
+
+    @Override
+    public void onRemove() {
+
+    }
+
+    @Override
+    protected String getClusterText(int bucket) {
+
+    }
+
+    @Override
+    protected int getBucket(Cluster<StringClusterItem> cluster) {
+
+    }
+
+    @Override
+    protected boolean shouldRenderAsCluster(Cluster<StringClusterItem> cluster) {
+
+    }
+
+    @Override
+    public void onClustersChanged(Set<? extends Cluster<StringClusterItem>> clusters) {
+
+    }
+
+    @Override
+    public void setOnClusterClickListener(ClusterManager.OnClusterClickListener<StringClusterItem> listener) {
+
+    }
+
+    @Override
+    public void setOnClusterInfoWindowClickListener(ClusterManager.OnClusterInfoWindowClickListener<StringClusterItem> listener) {
+
+    }
+
+    @Override
+    public void setOnClusterItemClickListener(ClusterManager.OnClusterItemClickListener<StringClusterItem> listener) {
+
+    }
+
+    @Override
+    public void setOnClusterItemInfoWindowClickListener(ClusterManager.OnClusterItemInfoWindowClickListener<StringClusterItem> listener) {
+
+    }
+
+    @Override
+    protected void onBeforeClusterRendered(Cluster<StringClusterItem> cluster, MarkerOptions markerOptions) {
+
+    }
+
+    @Override
+    protected void onClusterRendered(Cluster<StringClusterItem> cluster, Marker marker) {
+
+    }
+
+    @Override
+    protected void onClusterItemRendered(StringClusterItem clusterItem, Marker marker) {
+
+    }
+
+    @Override
+    public Marker getMarker(StringClusterItem clusterItem) {
+
+    }
+
+    @Override
+    public StringClusterItem getClusterItem(Marker marker) {
+
+    }
+
+    @Override
+    public Marker getMarker(Cluster<StringClusterItem> cluster) {
+
+    }
+
+    @Override
+    public Cluster<StringClusterItem> getCluster(Marker marker) {
+
+    }*/
+
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
@@ -221,23 +315,12 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-
-            // Asking user if explanation is needed
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-                //Prompt the user once explanation has been shown
                 ActivityCompat.requestPermissions(this,
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
-
-
             } else {
-                // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
@@ -266,15 +349,11 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // Permission was granted.
                     if (ContextCompat.checkSelfPermission(this,
                             android.Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
-
                         if (mGoogleApiClient == null) {
                             buildGoogleApiClient();
                         }
@@ -282,15 +361,10 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
                     }
 
                 } else {
-
-                    // Permission denied, Disable the functionality that depends on this permission.
                     Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
-
-            // other 'case' lines to check for other permissions this app might request.
-            //You can add here other case statements according to your requirement.
         }
     }
 
@@ -298,7 +372,6 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         tvstatus.setVisibility(View.GONE);
         prbstatus.setVisibility(View.GONE);
-
         mMap=googleMap;
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -365,16 +438,14 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
 
                     @Override
                     public boolean onClusterItemClick(StringClusterItem clusterItem) {
-                        //Toast.makeText(MapAllKos.this, "Cluster item click", Toast.LENGTH_SHORT).show();
-                        // if true, click handling stops here and do not show info view, do not move camera
-                        // you can avoid this by calling:
                         renderer.getMarker(clusterItem).showInfoWindow();
                         return false;
                     }
                 });
 
-        mClusterManager.getMarkerCollection()
-                .setOnInfoWindowAdapter(new CustomInfoViewAdapter(LayoutInflater.from(this)));
+        mClusterManager.getMarkerCollection().setOnInfoWindowAdapter(
+                new CustomInfoViewAdapter(LayoutInflater.from(this))
+        );
 
         mClusterManager.setOnClusterItemInfoWindowClickListener(
                 new ClusterManager.OnClusterItemInfoWindowClickListener<StringClusterItem>() {
@@ -423,39 +494,15 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
         mClusterManager.cluster();
     }
 
-    private void initMarkers() {
-        ClusterManager<ClusterMarkerLocation> clusterManager = new ClusterManager<ClusterMarkerLocation>( this, mMap );
-        mMap.setOnCameraChangeListener(clusterManager);
-        double lat;
-        double lng;
-        Random generator = new Random();
-        for( int i = 0; i < 1000; i++ ) {
-            lat = generator.nextDouble() / 3;
-            lng = generator.nextDouble() / 3;
-            if( generator.nextBoolean() ) {
-                lat = -lat;
-            }
-            if( generator.nextBoolean() ) {
-                lng = -lng;
-            }
-            clusterManager.addItem( new ClusterMarkerLocation( new LatLng( mCenterLocation.latitude + lat,
-                    mCenterLocation.longitude + lng ) ) );
-        }
-    }
-
     public static class StringClusterItem implements ClusterItem {
 
         private String title;
         private LatLng position;
         private ColHomeDetail entity;
 
-        public StringClusterItem(double lat, double lng) {
-            this.position = new LatLng(lat, lng);
-        }
-
         public StringClusterItem(String title, double lat, double lng, ColHomeDetail column) {
             this.title = title;
-            this.position = new LatLng(lat, lng);;
+            this.position = new LatLng(lat, lng);
             this.entity = column;
         }
 

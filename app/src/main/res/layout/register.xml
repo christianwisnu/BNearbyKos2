@@ -8,7 +8,9 @@
         <LinearLayout            
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,14 +103,15 @@
                 android:prompt="@string/country_prompt"/>
 
             <Button
-                android:textStyle="bold"
-                android:background="@color/Green"
+                android:background="@drawable/slctbutton"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/MarginButton"
                 android:layout_marginBottom="@dimen/MarginButton"
+                android:textColor="@color/md_white"
+                android:textSize="20dp"
                 android:id="@+id/bRegisterSave"
-                android:layout_width="150dp"
-                android:layout_height="@dimen/HButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Register" />
 
         </LinearLayout>

@@ -74,6 +74,7 @@
             android:background="@drawable/cardcyclewhite"
             android:gravity="center"
             android:text="DP"
+            android:visibility="invisible"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     </LinearLayout>

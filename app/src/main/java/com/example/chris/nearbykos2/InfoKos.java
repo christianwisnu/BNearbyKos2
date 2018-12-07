@@ -5,11 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +29,6 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -50,12 +46,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.TreeMap;
 
 import control.AppController;
 import control.Link;
+import model.ColFasilitas;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Chris on 21/06/2017.
@@ -89,6 +92,8 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
     private SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
     private Calendar dateAndTime = Calendar.getInstance();
     private AlertDialog alert;
+    private ArrayList<ColFasilitas> mArrayList;
+    StringBuilder sb = new StringBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +127,7 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
                 sisa = i.getInt("i_sisa");
             } catch (Exception e) {}
         }
+        loadJSON();
 
         treeMap = new TreeMap<Integer,String>();
         txtJudul		= (TextView)findViewById(R.id.TvTittleInfoKos);
@@ -153,7 +159,6 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
         txtOcupant.setText("Occupant: "+ ocupant);
         txtKontak.setText("Contact Person: "+namaCust);
         txtTelp.setText("Phone: "+telp);
-        txtFasilitas.setText("Fasilitas: "+fasilitas);
         txtAlamat.setText(alamat);
         txtSisa.setText("Sisa Kamar: "+String.valueOf(sisa));
 
@@ -253,6 +258,37 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+    }
+
+    private void loadJSON(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Link.FilePHP2)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RequestInterface request = retrofit.create(RequestInterface.class);
+        Call<JSONResponse> call = request.getFasilitas();
+        call.enqueue(new Callback<JSONResponse>() {
+            @Override
+            public void onResponse(Call<JSONResponse> call, retrofit2.Response<JSONResponse> response) {
+                JSONResponse jsonResponse = response.body();
+                mArrayList = new ArrayList<>(Arrays.asList(jsonResponse.getFasilitas()));
+                String[] fasilitySplit = fasilitas.split(",");
+                for(String key:fasilitySplit){
+                    for(ColFasilitas fas : mArrayList){
+                        if(key.equals(fas.getKodeFasilitas().trim())){
+                            sb.append(fas.getNamaFasilitas()).append(", ");
+                            break;
+                        }
+                    }
+                }
+                txtFasilitas.setText("Fasilitas: "+sb.substring(0, sb.length()-2).toString());
+            }
+
+            @Override
+            public void onFailure(Call<JSONResponse> call, Throwable t) {
+                t.printStackTrace();
             }
         });
     }

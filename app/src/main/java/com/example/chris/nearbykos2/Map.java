@@ -261,28 +261,11 @@ public class Map extends FragmentActivity implements
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        /*android.location.Address address = addresses.get(0);
-        if (address != null) {
-            sb = new StringBuilder();
-            for (int i = 0; i < address.getMaxAddressLineIndex(); i++){
-                sb.append(address.getAddressLine(i) + " ");
-            }
-            txtAlamat.setText(sb.toString());
-            Toast.makeText(Map.this, sb.toString(), Toast.LENGTH_LONG).show();
-        }*/
-
         String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-        String city = addresses.get(0).getLocality();
-        String state = addresses.get(0).getAdminArea();
-        String country = addresses.get(0).getCountryName();
         String postalCode = addresses.get(0).getPostalCode();
-        sb.append(address).append(city).append(state).append(country).append(postalCode);
+        sb.append(address).append(", ").append(postalCode);
         txtAlamat.setText(sb.toString());
-        //Toast.makeText(Map.this, sb.toString(), Toast.LENGTH_LONG).show();
-
         if (marker != null) {marker.remove();}
-
         marker = mGoogleMap.addMarker(new MarkerOptions().position(point).title("You are here")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
     }
