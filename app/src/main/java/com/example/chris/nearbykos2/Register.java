@@ -175,7 +175,9 @@ public class Register extends AppCompatActivity {
 				try {
 					JSONObject jsonrespon = new JSONObject(response);
 					int Sucsess = jsonrespon.getInt("success");
+					String message = jsonrespon.getString("message");
 					slasid		= String.valueOf(Sucsess);
+                    dialog.cancel();
 					Log.i("Suceses", String.valueOf(Sucsess));
 					if (Sucsess > 0 ){
 						String status=null;
@@ -184,27 +186,16 @@ public class Register extends AppCompatActivity {
 						}else{
 							status="CUST";
 						}
-                        session.setLogin(true);
-                        session.createLoginSession(columnlist.get(0).getIdUser(), columnlist.get(0).getUserName(),
-                                columnlist.get(0).getNamaLengkap(),
-                                columnlist.get(0).getTelp(), columnlist.get(0).getEmail(), status, true);
-                        Intent i = new Intent(Register.this, MainActivity.class);
-                        startActivityForResult(i, 5000);
-                        overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
-                        finish();
-						/*refresh();
-						dialog.cancel();
+                        refresh();
 						Toast.makeText(Register.this,
 								"Register berhasil. \nMasuk melalui menu LOGIN!", Toast.LENGTH_LONG)
-								.show();*/
-					}else{
-						Toast.makeText(Register.this,
-								"Gagal Coba Lagi", Toast.LENGTH_LONG)
 								.show();
+                        onBackPressed();
+					}else{
+						Toast.makeText(Register.this,message, Toast.LENGTH_LONG).show();
 					}
-
 				} catch (Exception e) {
-					// TODO: handle exception
+                    dialog.cancel();
 				}
 			}
 		}, new Response.ErrorListener() {
@@ -241,4 +232,9 @@ public class Register extends AppCompatActivity {
 		ePassword.setText("");
 		eusername.setFocusable(true);
 	}
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

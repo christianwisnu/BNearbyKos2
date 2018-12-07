@@ -88,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void signUp(){
         startActivityForResult(new Intent(LoginActivity.this, Register.class),3);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        finish();
     }
 
     @OnClick(R.id.btnLoginClearUser)
