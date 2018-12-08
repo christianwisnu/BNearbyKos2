@@ -121,18 +121,16 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
             }
         });
 
-        /*ImgLocation.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                gps 	  = new GPSTracker(MapAllKos.this);
-                latgpsg  = gps.getLatitude();
-                longgpas = gps.getLongitude();
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latgpsg, longgpas)));
-            }
-        });*/
-
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
         ImgSwitchView.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -173,95 +171,17 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
 
     }
 
-    /*@Override
-    protected void onBeforeClusterItemRendered(StringClusterItem item, MarkerOptions markerOptions) {
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(R.drawable.pipet_home));
-    }
-
-    /*@Override
-    public void onAdd() {
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
     }
 
     @Override
-    public void onRemove() {
-
+    protected void onStop() {
+        super.onStop();
+        mGoogleApiClient.disconnect();
     }
-
-    @Override
-    protected String getClusterText(int bucket) {
-
-    }
-
-    @Override
-    protected int getBucket(Cluster<StringClusterItem> cluster) {
-
-    }
-
-    @Override
-    protected boolean shouldRenderAsCluster(Cluster<StringClusterItem> cluster) {
-
-    }
-
-    @Override
-    public void onClustersChanged(Set<? extends Cluster<StringClusterItem>> clusters) {
-
-    }
-
-    @Override
-    public void setOnClusterClickListener(ClusterManager.OnClusterClickListener<StringClusterItem> listener) {
-
-    }
-
-    @Override
-    public void setOnClusterInfoWindowClickListener(ClusterManager.OnClusterInfoWindowClickListener<StringClusterItem> listener) {
-
-    }
-
-    @Override
-    public void setOnClusterItemClickListener(ClusterManager.OnClusterItemClickListener<StringClusterItem> listener) {
-
-    }
-
-    @Override
-    public void setOnClusterItemInfoWindowClickListener(ClusterManager.OnClusterItemInfoWindowClickListener<StringClusterItem> listener) {
-
-    }
-
-    @Override
-    protected void onBeforeClusterRendered(Cluster<StringClusterItem> cluster, MarkerOptions markerOptions) {
-
-    }
-
-    @Override
-    protected void onClusterRendered(Cluster<StringClusterItem> cluster, Marker marker) {
-
-    }
-
-    @Override
-    protected void onClusterItemRendered(StringClusterItem clusterItem, Marker marker) {
-
-    }
-
-    @Override
-    public Marker getMarker(StringClusterItem clusterItem) {
-
-    }
-
-    @Override
-    public StringClusterItem getClusterItem(Marker marker) {
-
-    }
-
-    @Override
-    public Marker getMarker(Cluster<StringClusterItem> cluster) {
-
-    }
-
-    @Override
-    public Cluster<StringClusterItem> getCluster(Marker marker) {
-
-    }*/
 
     @Override
     public void onLocationChanged(Location location) {

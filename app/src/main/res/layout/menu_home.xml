@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:orientation="vertical">
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/home_slider"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/home_listkos"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/menu1"
+                    android:layout_margin="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Daftar Kos"
+                    android:textColor="@color/md_black"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/home_booking"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/menu2"
+                    android:layout_margin="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Daftar Booking"
+                    android:textColor="@color/md_black"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/home_maps"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/menu3"
+                    android:layout_margin="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Maps Kos"
+                    android:textColor="@color/md_black"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/home_logout"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/logout"
+                    android:layout_margin="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LOGOUT"
+                    android:textColor="@color/md_black"
+                    android:textSize="20dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

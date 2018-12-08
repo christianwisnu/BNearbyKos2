@@ -1,7 +1,9 @@
 package com.example.chris.nearbykos2;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -41,6 +43,7 @@ import control.ExceptionHandler;
 import control.Link;
 import fragment.FAwalCust;
 import fragment.FCustRekening;
+import fragment.FHome;
 import fragment.FHomeKos;
 import fragment.FImageListKos;
 import fragment.FListBookingUser;
@@ -61,6 +64,8 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<ColHomeDetail> columnlist= new ArrayList<ColHomeDetail>();
     private String getData	="getListAllKos.php";
     private boolean doubleBackToExitPressedOnce = false;
+    private LocationManager locationManager ;
+    private boolean GpsStatus ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +106,7 @@ public class MainActivity extends AppCompatActivity
         if(sstatus==null){
             session.logoutUser();
         }else if(sstatus.equals("USER")){
-            changeFragment2ListUploadUserKriteria(new FListKos(), String.valueOf(sid), "ALL");
+            changeFragment2ListUploadUserKriteria(new FHome(), String.valueOf(sid), "ALL");
         }else if(sstatus.equals("CUST")){
             changeFragment(new FAwalCust());
         }
@@ -176,7 +181,14 @@ public class MainActivity extends AppCompatActivity
             //Intent i  = new Intent(this, MapsActivity.class);
             //startActivity(i);
         } else if (id == R.id.menuMap) {
-            getDataUpload(Link.FilePHP+getData);
+            CheckGpsStatus();
+            if(GpsStatus == true){
+                getDataUpload(Link.FilePHP+getData);
+            }else {
+                Toast.makeText(MainActivity.this,
+                        "GPS harap diaktifkan terlebih dahulu!", Toast.LENGTH_LONG)
+                        .show();
+            }
         } else if(id == R.id.menuLogout){
             finish();
             session.logoutUser();
@@ -185,6 +197,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void CheckGpsStatus(){
+        locationManager = (LocationManager)getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     private void menuCust(){
