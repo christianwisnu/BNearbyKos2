@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity
             return;
         }else{
             if(sstatus.equals("USER")){
-                changeFragment2ListUploadUserKriteria(new FListKos(), String.valueOf(sid), "ALL");
+                changeFragment2ListUploadUserKriteria(new FHome(), String.valueOf(sid), "ALL");
             }
         }
 
