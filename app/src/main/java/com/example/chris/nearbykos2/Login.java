@@ -164,12 +164,9 @@ public class Login extends android.support.v7.app.AppCompatActivity{
 
 					@Override
 					public void onResponse(String response) {
-						// TODO Auto-generated method stub
-						VolleyLog.d(TAG, response.toString());
 						try {
 							JSONObject jsonrespon = new JSONObject(response);
 							int Sucsess = jsonrespon.getInt("success");
-							Log.i("Status", String.valueOf(Sucsess));
 							dialog.dismiss();
 							if (Sucsess==1){
 								JSONArray JsonArray = jsonrespon.getJSONArray("Melbu");

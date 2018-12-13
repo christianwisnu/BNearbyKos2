@@ -97,6 +97,8 @@ public class FImageListKos extends Fragment {
                 i.putExtra("gambar", columnlist.get(position).getGambar());
                 i.putExtra("gambar", columnlist.get(position).getGambar());
                 i.putExtra("c_kodekota", columnlist.get(position).getKodeKota());
+                i.putExtra("rating", columnlist.get(position).getRating());
+                i.putExtra("countUser", columnlist.get(position).getCountUser());
                 getActivity().startActivity(i);
             }
         });
@@ -140,6 +142,9 @@ public class FImageListKos extends Fragment {
                                     colums.setTlpCust(object.getString("c_telp"));
                                     colums.setEmailCust(object.getString("c_email"));
                                     colums.setKodeKota(object.getString("c_kodekota"));
+                                    colums.setSisa(object.getInt("sisa"));
+                                    colums.setRating(object.getDouble("total_rating"));
+                                    colums.setCountUser(object.getInt("count_user"));
                                     // list gmbar blm
                                     columnlist.add(colums);
                                 }

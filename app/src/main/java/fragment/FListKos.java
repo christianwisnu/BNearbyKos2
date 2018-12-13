@@ -111,6 +111,8 @@ public class FListKos extends Fragment {
                 i.putExtra("gambar5", columnlist.get(position).getGambar5());
                 i.putExtra("c_kodekota", columnlist.get(position).getKodeKota());
                 i.putExtra("i_sisa", columnlist.get(position).getSisa());
+                i.putExtra("rating", columnlist.get(position).getRating());
+                i.putExtra("countUser", columnlist.get(position).getCountUser());
                 getActivity().startActivity(i);
             }
         });
@@ -159,6 +161,8 @@ public class FListKos extends Fragment {
                                     colums.setGambar5(object.getString("gambar5"));
                                     colums.setKodeKota(object.getString("kodeKota"));
                                     colums.setSisa(object.getInt("sisa"));
+                                    colums.setRating(object.getDouble("total_rating"));
+                                    colums.setCountUser(object.getInt("count_user"));
                                     // list gmbar bl
                                     columnlist.add(colums);
                                 }

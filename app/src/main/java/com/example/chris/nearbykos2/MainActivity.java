@@ -344,6 +344,8 @@ public class MainActivity extends AppCompatActivity
                                     colums.setGambar5(object.getString("gambar5"));
                                     colums.setKodeKota(object.getString("kodeKota"));
                                     colums.setSisa(object.getInt("sisa"));
+                                    colums.setRating(object.getDouble("total_rating"));
+                                    colums.setCountUser(object.getInt("count_user"));
                                     // list gmbar bl
                                     columnlist.add(colums);
                                 }

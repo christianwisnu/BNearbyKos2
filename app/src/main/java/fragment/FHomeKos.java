@@ -172,6 +172,8 @@ public class FHomeKos extends Fragment {
                                     colums.setKodeKota(object.getString("c_kodekota"));
                                     colums.setNamaKota(object.getString("vc_namakota"));
                                     colums.setSisa(object.getInt("i_sisa"));
+                                    colums.setRating(object.getDouble("total_rating"));
+                                    colums.setCountUser(object.getInt("count_user"));
                                     columnlist.add(colums);
                                 }
                             }else{

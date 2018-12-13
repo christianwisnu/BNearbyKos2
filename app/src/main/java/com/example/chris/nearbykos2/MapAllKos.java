@@ -392,6 +392,8 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
                         i.putExtra("gambar5", stringClusterItem.getEntity().getGambar5());
                         i.putExtra("c_kodekota", stringClusterItem.getEntity().getKodeKota());
                         i.putExtra("i_sisa", stringClusterItem.getEntity().getSisa());
+                        i.putExtra("rating", stringClusterItem.getEntity().getRating());
+                        i.putExtra("countUser", stringClusterItem.getEntity().getCountUser());
                         startActivity(i);
                     }
                 });

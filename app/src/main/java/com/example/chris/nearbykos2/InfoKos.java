@@ -40,11 +40,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.stepstone.apprating.AppRatingDialog;
+import com.stepstone.apprating.listener.RatingDialogListener;
+import com.willy.ratingbar.ScaleRatingBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,24 +61,29 @@ import java.util.TreeMap;
 import control.AppController;
 import control.Link;
 import model.ColFasilitas;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import service.BaseApiService;
+import session.SessionManager;
 
 /**
  * Created by Chris on 21/06/2017.
  */
 
 public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
-        BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
+        BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener, RatingDialogListener {
 
+    private ProgressDialog pDialog;
     private GoogleMap mGoogleMap;
+    private SessionManager session;
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
-    private ImageView imgBack;
+    private ImageView imgBack, imgGiveRate;
     private TextView txtJudul, txtNama, txtHarga, txtId, txtJmlh, txtPnjgLbr, txtListrik, txtOcupant, txtKontak,
-        txtTelp, txtFasilitas, txtAlamat, telefon, sms, txtSisa, txtCekin;
+        txtTelp, txtFasilitas, txtAlamat, telefon, sms, txtSisa, txtCekin, txtNilaiRating, txtCountUser;
     private String namaKos, listrik, ocupant, namaCust, telp, fasilitas, alamat, harga, slasid, idUser,
     gambar1, gambar2, gambar3, gambar4, gambar5;
     private Integer idKos, jmlh, panjang, lebar, idCust, hargaAsli;
@@ -88,17 +99,26 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
     private Integer countId, sisa;
     private SliderLayout sliderLayout;
     private TreeMap<Integer,String> treeMap;
-    private Integer a=0;
+    private Integer a=0, countUser;
     private SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
     private Calendar dateAndTime = Calendar.getInstance();
     private AlertDialog alert;
     private ArrayList<ColFasilitas> mArrayList;
     StringBuilder sb = new StringBuilder();
+    private ScaleRatingBar ratingDatabase;
+    private HashMap<String, Object> user;
+    private Object sstatus;
+    private double rating=0;
+    private BigDecimal hasilRating = BigDecimal.ZERO;
+    private BaseApiService mApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_kos);
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        mApiService         = Link.getAPIService();
         Bundle i = getIntent().getExtras();
         if (i != null){
             try {
@@ -125,11 +145,25 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
                 gambar4 = i.getString("gambar4");
                 gambar5 = i.getString("gambar5");
                 sisa = i.getInt("i_sisa");
+                rating = i.getDouble("rating");
+                countUser = i.getInt("countUser");
             } catch (Exception e) {}
         }
+        session =new SessionManager(getApplicationContext());
+        try {
+            user = session.getUserDetails();
+            sstatus = user.get(SessionManager.sStatusLogin);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
         loadJSON();
 
         treeMap = new TreeMap<Integer,String>();
+        txtCountUser = (TextView)findViewById(R.id.txtUserRating);
+        txtNilaiRating = (TextView) findViewById(R.id.txtNilaiRating);
+        ratingDatabase = (ScaleRatingBar)findViewById(R.id.simpleRatingBar);
+        imgGiveRate = (ImageView)findViewById(R.id.imgGiveRating);
         txtJudul		= (TextView)findViewById(R.id.TvTittleInfoKos);
         txtNama		= (TextView)findViewById(R.id.txtNamaInfoKos);
         txtHarga		= (TextView)findViewById(R.id.txtHargaInfoKos);
@@ -222,6 +256,13 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(13), 200, null);
         createLocationRequest();*/
 
+        reloadDataRating();
+
+        if(sstatus.equals("USER")){
+            imgGiveRate.setVisibility(View.VISIBLE);
+        }else{
+            imgGiveRate.setVisibility(View.INVISIBLE);
+        }
         telefon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -254,12 +295,175 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
             }
         });
 
+        imgGiveRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectCountUser();
+            }
+        });
+
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onPositiveButtonClicked(int rate, String comment) {
+        requestRegister(idKos, idUser, comment, rate);
+    }
+
+    @Override
+    public void onNegativeButtonClicked() {
+
+    }
+
+    @Override
+    public void onNeutralButtonClicked() {
+
+    }
+
+    private void requestRegister(final Integer idBeritaku, final String idUserku, final String isi,
+                                 final Integer rate){
+        pDialog.setMessage("Please Wait ...");
+        showDialog();
+        mApiService.saveRating(idBeritaku, idUserku, isi, rate).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonRESULTS = new JSONObject(response.body().string());
+                        if (jsonRESULTS.getString("value").equals("false")){
+                            if (jsonRESULTS.getString("value").equals("false")){
+                                rating = jsonRESULTS.getJSONObject("rate").getInt("total_nilai");
+                                countUser = jsonRESULTS.getJSONObject("rate").getInt("user_count");
+                                reloadDataRating();
+                                Toast.makeText(InfoKos.this, "Thank You for your Rate....", Toast.LENGTH_LONG).show();
+                            } else {
+                                String error_message = jsonRESULTS.getString("message");
+                                Toast.makeText(InfoKos.this, error_message, Toast.LENGTH_LONG).show();
+                            }
+                            hideDialog();
+                        }
+                    }catch (JSONException e) {
+                        hideDialog();
+                        Toast.makeText(InfoKos.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }catch (IOException e) {
+                        hideDialog();
+                        Toast.makeText(InfoKos.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                }else{
+                    hideDialog();
+                    Toast.makeText(InfoKos.this, "GAGAL", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hideDialog();
+                Toast.makeText(InfoKos.this, "GAGAL", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void selectCountUser(){
+        pDialog.setMessage("Please Wait, Load Data...");
+        showDialog();
+        mApiService.countUser(idKos, idUser).
+                enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                        if (response.isSuccessful()){
+                            try{
+                                JSONObject jsonRESULTS = new JSONObject(response.body().string());
+                                if (jsonRESULTS.getString("value").equals("false")){
+                                    Integer nilaiCount = jsonRESULTS.getJSONObject("user").getInt("nilai");
+                                    if(nilaiCount.intValue()>0){
+                                        Toast.makeText(InfoKos.this, "Anda sudah berpartisipasi memberikan rating terhadap konten ini!", Toast.LENGTH_LONG).show();
+                                        hideDialog();
+                                    }else{//<=0
+                                        hideDialog();
+                                        showDialogRate();
+                                    }
+                                }else{
+                                    String error_message = jsonRESULTS.getString("message");
+                                    Toast.makeText(InfoKos.this, error_message, Toast.LENGTH_LONG).show();
+                                    hideDialog();
+                                }
+                            }catch (JSONException e) {
+                                hideDialog();
+                                e.printStackTrace();
+                                Toast.makeText(InfoKos.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                            } catch (IOException e) {
+                                hideDialog();
+                                e.printStackTrace();
+                                Toast.makeText(InfoKos.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }else{
+                            hideDialog();
+                            Toast.makeText(InfoKos.this, "GAGAL LOAD DATA", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        hideDialog();
+                        Toast.makeText(InfoKos.this, "GAGAL LOAD DATA", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    private void showDialogRate() {
+        new AppRatingDialog.Builder()
+                .setPositiveButtonText("Submit")
+                .setNegativeButtonText("Cancel")
+                .setNeutralButtonText("Later")
+                .setNoteDescriptions(Arrays.asList("Very Bad", "Not good", "Quite ok", "Very Good", "Excellent !!!"))
+                .setDefaultRating(3)
+                .setTitle("Rate this Place")
+                .setDescription("Please select some stars and give your feedback")
+                //.setDefaultComment("This app is pretty cool !")
+                .setStarColor(R.color.md_cyan_a400)
+                .setNoteDescriptionTextColor(R.color.md_black)
+                .setTitleTextColor(R.color.md_black)
+                .setDescriptionTextColor(R.color.md_black)
+                .setHint("Please write your comment here ...")
+                .setHintTextColor(R.color.md_grey_500)
+                .setCommentTextColor(R.color.md_white)
+                .setCommentBackgroundColor(R.color.colorPrimaryDark)
+                .setWindowAnimation(R.style.MyDialogFadeAnimation)
+                .create(InfoKos.this)
+                .show();
+    }
+
+    private void showDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hideDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
+    private void reloadDataRating(){
+        if(rating>0){
+            hasilRating = new BigDecimal(rating).divide(new BigDecimal(countUser),1, RoundingMode.HALF_UP);
+        }
+        if(hasilRating.compareTo(BigDecimal.ZERO) == 0){
+            txtNilaiRating.setText("0.0");
+        }else{
+            txtNilaiRating.setText(String.valueOf(hasilRating));
+        }
+        txtCountUser.setText(String.valueOf(countUser));
+
+        ratingDatabase.setClickable(false);
+        ratingDatabase.setScrollable(false);
+        ratingDatabase.setRating(hasilRating.floatValue());
     }
 
     private void loadJSON(){

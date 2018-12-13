@@ -69,7 +69,9 @@ public class SearchKriteriaKos extends Activity {
         loadFasilitas();
 
         //querySisa = "a.i_sisa ";
-        querySisa = "a.i_jmlkamar-(SELECT COUNT(*) FROM home_transaction d WHERE d.c_stat='A' AND d.c_statusbooking='A' AND d.id_kos = a.id_kos) AS i_sisa ";
+        querySisa = "a.i_jmlkamar-(SELECT COUNT(*) FROM home_transaction d WHERE d.c_stat='A' AND d.c_statusbooking='A' AND d.id_kos = a.id_kos) AS i_sisa," +
+                " COALESCE((select sum(n_nilai) from tbRating where id_kos = a.id_kos),0) AS total_rating," +
+                " COALESCE((select count(*) from tbRating where id_kos = a.id_kos),0) AS count_user  ";
         ckAllFasilitas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

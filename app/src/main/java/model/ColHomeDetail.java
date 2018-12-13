@@ -36,6 +36,8 @@ public class ColHomeDetail implements Parcelable {
     private String kodeKota;
     private String namaKota;
     private Integer sisa;
+    private double rating;
+    private Integer countUser;
     private ArrayList<ColListImge> listImage;
 
     public Integer getId_kos() {
@@ -302,5 +304,21 @@ public class ColHomeDetail implements Parcelable {
 
     public void setSisa(Integer sisa) {
         this.sisa = sisa;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public Integer getCountUser() {
+        return countUser;
+    }
+
+    public void setCountUser(Integer countUser) {
+        this.countUser = countUser;
     }
 }

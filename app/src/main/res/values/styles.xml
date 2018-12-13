@@ -198,4 +198,9 @@
         <item name="android:textColor">@color/Red</item>
     </style>
 
+    <style name="MyDialogFadeAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
 </resources>
