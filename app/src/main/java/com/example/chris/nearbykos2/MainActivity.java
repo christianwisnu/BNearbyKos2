@@ -168,6 +168,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.masterKos) {
             changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "1");
+        } else if (id == R.id.menuHomeAwal) {
+            changeFragment2ListUploadUserKriteria(new FHome(), String.valueOf(sid), "ALL");
         } else if (id == R.id.bookingKos) {
             changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "2");
         } /*else if (id == R.id.masterbank) {
@@ -209,6 +211,7 @@ public class MainActivity extends AppCompatActivity
     private void menuCust(){
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.menuHomeAwal).setVisible(false);
         nav_Menu.findItem(R.id.menuListKos).setVisible(false);
         nav_Menu.findItem(R.id.menuListImage).setVisible(false);
         nav_Menu.findItem(R.id.menuBooking).setVisible(false);
@@ -224,6 +227,7 @@ public class MainActivity extends AppCompatActivity
     private void menuUser(){
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.menuHomeAwal).setVisible(true);
         nav_Menu.findItem(R.id.menuListKos).setVisible(true);
         nav_Menu.findItem(R.id.menuListImage).setVisible(false);
         nav_Menu.findItem(R.id.menuBooking).setVisible(true);
