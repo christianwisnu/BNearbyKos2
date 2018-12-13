@@ -4,23 +4,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/TvNamaKosListPenyewaKos"
-        android:textStyle="bold"
-        android:layout_gravity="center|top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nama Kos"
-        android:textSize="20dp"
-        android:textColor="@color/md_black"/>
-
-    <ListView
-        android:divider="#000000"
-        android:id="@+id/LsvListPenyewaKos"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp">
-    </ListView>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/TvNamaKosListPenyewaKos"
+            android:textStyle="bold"
+            android:layout_gravity="center|top"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Kos"
+            android:textSize="20dp"
+            android:textColor="@color/md_black"/>
+
+        <ListView
+            android:divider="#000000"
+            android:id="@+id/LsvListPenyewaKos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+        </ListView>
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/PrbStatusListPenyewaKos"

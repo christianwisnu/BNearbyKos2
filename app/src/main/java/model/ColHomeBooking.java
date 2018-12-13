@@ -29,6 +29,7 @@ public class ColHomeBooking implements Parcelable {
     private String namaBank;
     private Integer line;
     private String noRek;
+    private String tglKeluar;
 
     public ColHomeBooking() {
     };
@@ -51,6 +52,7 @@ public class ColHomeBooking implements Parcelable {
         namaBank = in.readString();
         line = in.readInt();
         noRek = in.readString();
+        tglKeluar = in.readString();
     }
 
     public static final Creator<ColHomeBooking> CREATOR = new Creator<ColHomeBooking>() {
@@ -89,6 +91,7 @@ public class ColHomeBooking implements Parcelable {
         dest.writeString(namaBank);
         dest.writeInt(line);
         dest.writeString(noRek);
+        dest.writeString(tglKeluar);
     }
 
     public Integer getIdBooking() {
@@ -249,5 +252,13 @@ public class ColHomeBooking implements Parcelable {
 
     public void setNoRek(String noRek) {
         this.noRek = noRek;
+    }
+
+    public String getTglKeluar() {
+        return tglKeluar;
+    }
+
+    public void setTglKeluar(String tglKeluar) {
+        this.tglKeluar = tglKeluar;
     }
 }

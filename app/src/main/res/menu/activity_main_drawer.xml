@@ -24,9 +24,13 @@
     <group android:checkableBehavior="single"
         android:id="@+id/grupUser">
         <item
+            android:id="@+id/menuHomeAwal"
+            android:icon="@mipmap/ic_action_reload"
+            android:title="Home" />
+        <item
             android:id="@+id/menuListKos"
             android:icon="@mipmap/ic_action_home"
-            android:title="Cari Kos" />
+            android:title="Daftar Kos" />
         <item
             android:id="@+id/menuListImage"
             android:icon="@mipmap/ic_action_box"
@@ -44,7 +48,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menuLogout"
-            android:icon="@mipmap/ic_action_exit"
+            android:icon="@mipmap/ic_action_exit2"
             android:title="Logout" />
 
     </group>

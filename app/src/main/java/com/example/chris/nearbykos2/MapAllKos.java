@@ -2,12 +2,9 @@ package com.example.chris.nearbykos2;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Icon;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -135,7 +132,6 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 switch (Tag) {
                     case 0:
                         ImgSwitchView.setImageResource(R.drawable.ic_lightearth);
@@ -155,7 +151,6 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 mMap.animateCamera(CameraUpdateFactory.zoomIn());
             }
         });
@@ -164,7 +159,6 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 mMap.animateCamera(CameraUpdateFactory.zoomOut());
             }
         });
@@ -397,6 +391,7 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
                         i.putExtra("gambar4", stringClusterItem.getEntity().getGambar4());
                         i.putExtra("gambar5", stringClusterItem.getEntity().getGambar5());
                         i.putExtra("c_kodekota", stringClusterItem.getEntity().getKodeKota());
+                        i.putExtra("i_sisa", stringClusterItem.getEntity().getSisa());
                         startActivity(i);
                     }
                 });
@@ -408,7 +403,8 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
         //ImgLocation.performClick();
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
         for(ColHomeDetail entity: columnlist){
-            mClusterManager.addItem(new StringClusterItem(entity.getNamaKos()+" \nTlp: "+entity.getTlpCust(),
+            mClusterManager.addItem(new StringClusterItem(entity.getNamaKos()+" \nTlp: "+entity.getTlpCust()+
+                    "\nSisa kamar: "+entity.getSisa(),
                     entity.getLatitude(), entity.getLongtitude(), entity));
         }
         mClusterManager.cluster();

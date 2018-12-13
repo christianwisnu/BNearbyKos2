@@ -95,11 +95,11 @@ public class AdpListBookingCust extends ArrayAdapter<ColHomeBooking> {
             holder.ImgGmbrListKos.setTag(url);
         }
 
-        if (columnslist.get(position).getStatusDP().equals("S")){
+        /*if (columnslist.get(position).getStatusDP().equals("S")){
             holder.ImgDP.setVisibility(View.VISIBLE);
         }else{
             holder.ImgDP.setVisibility(View.INVISIBLE);
-        }
+        }*/
 
         holder.ImgDP.setOnClickListener(new View.OnClickListener() {
 
@@ -196,8 +196,6 @@ public class AdpListBookingCust extends ArrayAdapter<ColHomeBooking> {
 
                     @Override
                     public void onResponse(String response) {
-                        // TODO Auto-generated method stub
-                        //VolleyLog.d(TAG, response.toString());
                         try {
                             JSONObject jsonrespon = new JSONObject(response);
                             int Sucsess = jsonrespon.getInt("success");

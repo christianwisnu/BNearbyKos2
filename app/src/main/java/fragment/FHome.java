@@ -46,8 +46,6 @@ import control.Link;
 import model.ColHomeDetail;
 import session.SessionManager;
 
-import static android.view.Gravity.START;
-
 public class FHome extends Fragment {
 
     private View vupload;
@@ -146,10 +144,8 @@ public class FHome extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        // TODO Auto-generated method stub
                         try {
                             int sucses= response.getInt("success");
-                            Log.i("Status", String.valueOf(sucses));
                             if (sucses==1){
                                 JSONArray JsonArray = response.getJSONArray("kriteriaKos");
                                 for (int i = 0; i < JsonArray.length(); i++) {
@@ -177,6 +173,7 @@ public class FHome extends Fragment {
                                     colums.setGambar4(object.getString("gambar4"));
                                     colums.setGambar5(object.getString("gambar5"));
                                     colums.setKodeKota(object.getString("kodeKota"));
+                                    colums.setSisa(object.getInt("sisa"));
                                     // list gmbar bl
                                     columnlist.add(colums);
                                 }
@@ -190,7 +187,6 @@ public class FHome extends Fragment {
                                 Toast.makeText(getContext(),"Data tidak ada!", Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }
@@ -198,36 +194,16 @@ public class FHome extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                // TODO Auto-generated method stub
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getContext(),"Check Koneksi Internet Anda", Toast.LENGTH_LONG).show();
-                    /*tvstatus.setVisibility(View.VISIBLE);
-                    tvstatus.setText("Check Koneksi Internet Anda");
-                    prbstatus.setVisibility(View.GONE);*/
                 } else if (error instanceof AuthFailureError) {
-                    //TODO
                     Toast.makeText(getContext(),"AuthFailureError", Toast.LENGTH_LONG).show();
-                    /*tvstatus.setVisibility(View.VISIBLE);
-                    tvstatus.setText("AuthFailureError");
-                    prbstatus.setVisibility(View.GONE);*/
                 } else if (error instanceof ServerError) {
-                    //TODO
                     Toast.makeText(getContext(),"Check ServerError", Toast.LENGTH_LONG).show();
-                    /*tvstatus.setVisibility(View.VISIBLE);
-                    tvstatus.setText("Check ServerError");
-                    prbstatus.setVisibility(View.GONE);*/
                 } else if (error instanceof NetworkError) {
-                    //TODO
                     Toast.makeText(getContext(),"Check NetworkError", Toast.LENGTH_LONG).show();
-                    /*tvstatus.setVisibility(View.VISIBLE);
-                    tvstatus.setText("Check NetworkError");
-                    prbstatus.setVisibility(View.GONE);*/
                 } else if (error instanceof ParseError) {
-                    //TODO
                     Toast.makeText(getContext(),"Check ParseError", Toast.LENGTH_LONG).show();
-                    /*tvstatus.setVisibility(View.VISIBLE);
-                    tvstatus.setText("Check ParseError");
-                    prbstatus.setVisibility(View.GONE);*/
                 }
             }
         }){

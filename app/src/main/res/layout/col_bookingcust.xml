@@ -76,7 +76,8 @@
                         android:gravity="center"
                         android:textColor="@color/md_black"
                         android:text="Small Text"
-                        android:textSize="13dp" />
+                        android:textSize="13dp"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
             </RelativeLayout>
@@ -133,7 +134,9 @@
             android:background="@drawable/cardcyclewhite"
             android:gravity="center"
             android:text="DP"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:visibility="invisible"/>
+
     </LinearLayout>
 
 </LinearLayout>

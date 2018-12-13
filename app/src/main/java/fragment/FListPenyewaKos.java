@@ -79,10 +79,8 @@ public class FListPenyewaKos extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        // TODO Auto-generated method stub
                         try {
                             int sucses= response.getInt("success");
-                            Log.i("Status", String.valueOf(sucses));
                             if (sucses==1){
                                 tvstatus.setVisibility(View.GONE);
                                 prbstatus.setVisibility(View.GONE);
@@ -107,38 +105,31 @@ public class FListPenyewaKos extends Fragment {
                                 prbstatus.setVisibility(View.GONE);
                             }
                         } catch (JSONException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                         adapter.notifyDataSetChanged();
-                        //lsvupload.invalidate();
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                // TODO Auto-generated method stub
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("Check Koneksi Internet Anda");
                     prbstatus.setVisibility(View.GONE);
                 } else if (error instanceof AuthFailureError) {
-                    //TODO
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("AuthFailureError");
                     prbstatus.setVisibility(View.GONE);
                 } else if (error instanceof ServerError) {
-                    //TODO
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("Check ServerError");
                     prbstatus.setVisibility(View.GONE);
                 } else if (error instanceof NetworkError) {
-                    //TODO
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("Check NetworkError");
                     prbstatus.setVisibility(View.GONE);
                 } else if (error instanceof ParseError) {
-                    //TODO
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("Check ParseError");
                     prbstatus.setVisibility(View.GONE);
@@ -159,6 +150,7 @@ public class FListPenyewaKos extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        columnlist= new ArrayList<ColTransaksi>();
         adapter		= new AdpListPenyewaKos(getActivity(), R.layout.col_penyewa, columnlist);
         lsvupload.setAdapter(adapter);
         GetDataUpload(Link.FilePHP+getData+idKos);

@@ -151,7 +151,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            return true;
+            Intent i = new Intent(this, SearchKriteriaKos.class);
+            startActivityForResult(i,2);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -169,13 +170,14 @@ public class MainActivity extends AppCompatActivity
             changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "1");
         } else if (id == R.id.bookingKos) {
             changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "2");
-        } else if (id == R.id.masterbank) {
+        } /*else if (id == R.id.masterbank) {
             changeFragmentListCustKriteria(new FCustRekening(), String.valueOf(sid));
-        } /*else if (id == R.id.dataSewaKos) {//List penyewa
+        } */else if (id == R.id.dataSewaKos) {//List penyewa
             changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "3");
-        } */else if (id == R.id.menuListKos) {
-            Intent i = new Intent(this, SearchKriteriaKos.class);
-            startActivityForResult(i,2);
+        } else if (id == R.id.menuListKos) {
+            changeFragment2ListUploadUserKriteria(new FListKos(), String.valueOf(sid), "ALL");
+            /*Intent i = new Intent(this, SearchKriteriaKos.class);
+            startActivityForResult(i,2);*/
         } else if (id == R.id.menuBooking) {
             changeFragmentListUploadUserKriteria(new FListBookingUser(), String.valueOf(sid));
             //Intent i  = new Intent(this, MapsActivity.class);
@@ -214,9 +216,9 @@ public class MainActivity extends AppCompatActivity
 
         nav_Menu.findItem(R.id.masterKos).setVisible(true);
         nav_Menu.findItem(R.id.bookingKos).setVisible(true);
-        nav_Menu.findItem(R.id.masterbank).setVisible(true);
+        nav_Menu.findItem(R.id.masterbank).setVisible(false);
         //list penyewa
-        nav_Menu.findItem(R.id.dataSewaKos).setVisible(false);
+        nav_Menu.findItem(R.id.dataSewaKos).setVisible(true);
     }
 
     private void menuUser(){
@@ -312,10 +314,8 @@ public class MainActivity extends AppCompatActivity
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        // TODO Auto-generated method stub
                         try {
                             int sucses= response.getInt("success");
-                            Log.i("Status", String.valueOf(sucses));
                             if (sucses==1){
                                 JSONArray JsonArray = response.getJSONArray("kriteriaKos");
                                 for (int i = 0; i < JsonArray.length(); i++) {
@@ -343,6 +343,7 @@ public class MainActivity extends AppCompatActivity
                                     colums.setGambar4(object.getString("gambar4"));
                                     colums.setGambar5(object.getString("gambar5"));
                                     colums.setKodeKota(object.getString("kodeKota"));
+                                    colums.setSisa(object.getInt("sisa"));
                                     // list gmbar bl
                                     columnlist.add(colums);
                                 }
@@ -356,7 +357,6 @@ public class MainActivity extends AppCompatActivity
                                 Toast.makeText(getApplicationContext(),"Data tidak ada!", Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }
@@ -364,36 +364,16 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                // TODO Auto-generated method stub
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     Toast.makeText(getApplicationContext(),"Check Koneksi Internet Anda", Toast.LENGTH_LONG).show();
-                    /*tvstatus.setVisibility(View.VISIBLE);
-                    tvstatus.setText("Check Koneksi Internet Anda");
-                    prbstatus.setVisibility(View.GONE);*/
                 } else if (error instanceof AuthFailureError) {
-                    //TODO
                     Toast.makeText(getApplicationContext(),"AuthFailureError", Toast.LENGTH_LONG).show();
-                    /*tvstatus.setVisibility(View.VISIBLE);
-                    tvstatus.setText("AuthFailureError");
-                    prbstatus.setVisibility(View.GONE);*/
                 } else if (error instanceof ServerError) {
-                    //TODO
                     Toast.makeText(getApplicationContext(),"Check ServerError", Toast.LENGTH_LONG).show();
-                    /*tvstatus.setVisibility(View.VISIBLE);
-                    tvstatus.setText("Check ServerError");
-                    prbstatus.setVisibility(View.GONE);*/
                 } else if (error instanceof NetworkError) {
-                    //TODO
                     Toast.makeText(getApplicationContext(),"Check NetworkError", Toast.LENGTH_LONG).show();
-                    /*tvstatus.setVisibility(View.VISIBLE);
-                    tvstatus.setText("Check NetworkError");
-                    prbstatus.setVisibility(View.GONE);*/
                 } else if (error instanceof ParseError) {
-                    //TODO
                     Toast.makeText(getApplicationContext(),"Check ParseError", Toast.LENGTH_LONG).show();
-                    /*tvstatus.setVisibility(View.VISIBLE);
-                    tvstatus.setText("Check ParseError");
-                    prbstatus.setVisibility(View.GONE);*/
                 }
             }
         }){

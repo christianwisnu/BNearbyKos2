@@ -15,7 +15,7 @@
             android:layout_height="@dimen/actionbar_dimen"
             android:scaleType="centerInside"
             android:id="@+id/ImbBackInfoKos"
-            android:src="@mipmap/ic_action_arrow_left_black" />
+            android:src="@mipmap/ic_action_arrow_left" />
 
         <TextView
             style="@style/text_large_bold"

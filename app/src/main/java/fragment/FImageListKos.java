@@ -2,7 +2,6 @@ package fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,7 +36,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import adapter.AdpListImageKos;
-import adapter.AdpListUserKos;
 import control.AppController;
 import control.Link;
 import model.ColHomeDetail;
@@ -58,7 +56,6 @@ public class FImageListKos extends Fragment {
     private String getData	="getListAllKos.php";
     NumberFormat rupiah	= NumberFormat.getNumberInstance(new Locale("in", "ID"));
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle bundle	 = this.getArguments();
@@ -80,7 +77,6 @@ public class FImageListKos extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> Parent, View view, int position,
                                     long id) {
-                // TODO Auto-generated method stub
                 Intent i = new Intent(getActivity(), InfoKos.class);
                 i.putExtra("id_kos", columnlist.get(position).getId_kos());
                 i.putExtra("i_idcust", columnlist.get(position).getId_cust());
@@ -116,10 +112,8 @@ public class FImageListKos extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        // TODO Auto-generated method stub
                         try {
                             int sucses= response.getInt("success");
-                            Log.i("Status", String.valueOf(sucses));
                             if (sucses==1){
                                 tvstatus.setVisibility(View.GONE);
                                 prbstatus.setVisibility(View.GONE);
@@ -159,34 +153,28 @@ public class FImageListKos extends Fragment {
                             e.printStackTrace();
                         }
                         adapter.notifyDataSetChanged();
-                        //lsvupload.invalidate();
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                // TODO Auto-generated method stub
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("Check Koneksi Internet Anda");
                     prbstatus.setVisibility(View.GONE);
                 } else if (error instanceof AuthFailureError) {
-                    //TODO
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("AuthFailureError");
                     prbstatus.setVisibility(View.GONE);
                 } else if (error instanceof ServerError) {
-                    //TODO
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("Check ServerError");
                     prbstatus.setVisibility(View.GONE);
                 } else if (error instanceof NetworkError) {
-                    //TODO
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("Check NetworkError");
                     prbstatus.setVisibility(View.GONE);
                 } else if (error instanceof ParseError) {
-                    //TODO
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("Check ParseError");
                     prbstatus.setVisibility(View.GONE);
@@ -207,6 +195,7 @@ public class FImageListKos extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        columnlist= new ArrayList<ColHomeDetail>();
         adapter		= new AdpListImageKos(getActivity(), R.layout.col_imagelist, columnlist);
         lsvupload.setAdapter(adapter);
         GetDataUpload(Link.FilePHP+getData);

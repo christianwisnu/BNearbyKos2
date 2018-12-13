@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -86,7 +85,6 @@ public class FCustRekening extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> Parent, View view, int position,
                                     long id) {
-                // TODO Auto-generated method stub
                 if(status.equals("2")){
                     changeFragment(String.valueOf(columnlist.get(position).getId_kos()));
                 }else if(status.equals("3")){
@@ -108,7 +106,6 @@ public class FCustRekening extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        // TODO Auto-generated method stub
                         try {
                             int sucses= response.getInt("success");
                             if (sucses==1){
@@ -132,38 +129,31 @@ public class FCustRekening extends Fragment {
                                 prbstatus.setVisibility(View.GONE);
                             }
                         } catch (JSONException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                         adapter.notifyDataSetChanged();
-                        //lsvupload.invalidate();
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                // TODO Auto-generated method stub
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("Check Koneksi Internet Anda");
                     prbstatus.setVisibility(View.GONE);
                 } else if (error instanceof AuthFailureError) {
-                    //TODO
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("AuthFailureError");
                     prbstatus.setVisibility(View.GONE);
                 } else if (error instanceof ServerError) {
-                    //TODO
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("Check ServerError");
                     prbstatus.setVisibility(View.GONE);
                 } else if (error instanceof NetworkError) {
-                    //TODO
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("Check NetworkError");
                     prbstatus.setVisibility(View.GONE);
                 } else if (error instanceof ParseError) {
-                    //TODO
                     tvstatus.setVisibility(View.VISIBLE);
                     tvstatus.setText("Check ParseError");
                     prbstatus.setVisibility(View.GONE);
@@ -184,6 +174,7 @@ public class FCustRekening extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        columnlist= new ArrayList<ColCustRekening>();
         adapter		= new AdpCustRekening(getActivity(), R.layout.col_custrekening, columnlist);
         lsvupload.setAdapter(adapter);
         GetDataUpload(Link.FilePHP+getUpload+idCust);

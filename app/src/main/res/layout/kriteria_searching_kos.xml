@@ -15,7 +15,7 @@
             android:layout_height="@dimen/actionbar_dimen"
             android:scaleType="centerInside"
             android:id="@+id/imgBackKriteriaKos"
-            android:src="@mipmap/ic_action_arrow_left_black" />
+            android:src="@mipmap/ic_action_arrow_left" />
 
         <TextView
             style="@style/text_large_bold"
@@ -122,7 +122,7 @@
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/bKriteriaFasilitasKos"
-                        android:background="@mipmap/ic_action_database"
+                        android:background="@mipmap/ic_action_list_2"
                         android:layout_gravity="center"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:layout_centerVertical="true"
