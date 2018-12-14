@@ -18,13 +18,13 @@ public interface BaseApiService {
     @FormUrlEncoded
     @POST("countUserRate.php")
     Call<ResponseBody> countUser(@Field("idKos") Integer idKos,
-                                 @Field("idUser") String idUser
+                                 @Field("idUser") Integer idUser
     );
 
     @FormUrlEncoded
     @POST("dialogRate.php")
-    Call<ResponseBody> saveRating(@Field("idBerita") Integer idBerita,
-                                  @Field("idUser") String idUser,
+    Call<ResponseBody> saveRating(@Field("idKos") Integer idKos,
+                                  @Field("idUser") Integer idUser,
                                   @Field("isi") String isi,
                                   @Field("rate") double rate
     );

@@ -259,7 +259,7 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
         reloadDataRating();
 
         if(sstatus.equals("USER")){
-            imgGiveRate.setVisibility(View.VISIBLE);
+            imgGiveRate.setVisibility(View.INVISIBLE);
         }else{
             imgGiveRate.setVisibility(View.INVISIBLE);
         }
@@ -312,7 +312,7 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
 
     @Override
     public void onPositiveButtonClicked(int rate, String comment) {
-        requestRegister(idKos, idUser, comment, rate);
+        requestRegister(idKos, Integer.valueOf(idUser), comment, rate);
     }
 
     @Override
@@ -325,7 +325,7 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
 
     }
 
-    private void requestRegister(final Integer idBeritaku, final String idUserku, final String isi,
+    private void requestRegister(final Integer idBeritaku, final Integer idUserku, final String isi,
                                  final Integer rate){
         pDialog.setMessage("Please Wait ...");
         showDialog();
@@ -340,7 +340,7 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
                                 rating = jsonRESULTS.getJSONObject("rate").getInt("total_nilai");
                                 countUser = jsonRESULTS.getJSONObject("rate").getInt("user_count");
                                 reloadDataRating();
-                                Toast.makeText(InfoKos.this, "Thank You for your Rate....", Toast.LENGTH_LONG).show();
+                                Toast.makeText(InfoKos.this, "Terima kasih atas penilaian anda", Toast.LENGTH_LONG).show();
                             } else {
                                 String error_message = jsonRESULTS.getString("message");
                                 Toast.makeText(InfoKos.this, error_message, Toast.LENGTH_LONG).show();
@@ -373,7 +373,7 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
     private void selectCountUser(){
         pDialog.setMessage("Please Wait, Load Data...");
         showDialog();
-        mApiService.countUser(idKos, idUser).
+        mApiService.countUser(idKos, Integer.valueOf(idUser)).
                 enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
@@ -383,7 +383,7 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
                                 if (jsonRESULTS.getString("value").equals("false")){
                                     Integer nilaiCount = jsonRESULTS.getJSONObject("user").getInt("nilai");
                                     if(nilaiCount.intValue()>0){
-                                        Toast.makeText(InfoKos.this, "Anda sudah berpartisipasi memberikan rating terhadap konten ini!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(InfoKos.this, "Anda sudah berpartisipasi memberikan rating terhadap tempat kos ini!", Toast.LENGTH_LONG).show();
                                         hideDialog();
                                     }else{//<=0
                                         hideDialog();
