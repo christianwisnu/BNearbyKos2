@@ -1,13 +1,17 @@
 package com.example.chris.nearbykos2;
 
+import android.Manifest;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -37,10 +41,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import control.AppController;
 import control.ExceptionHandler;
 import control.Link;
+import control.RequestPermissionHandler;
 import fragment.FAwalCust;
 import fragment.FCustRekening;
 import fragment.FHome;
@@ -66,12 +72,19 @@ public class MainActivity extends AppCompatActivity
     private boolean doubleBackToExitPressedOnce = false;
     private LocationManager locationManager ;
     private boolean GpsStatus ;
+    private RequestPermissionHandler mRequestPermissionHandler;
+    private List<String> listPermissionsNeeded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_main);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mRequestPermissionHandler = new RequestPermissionHandler();
+            checkAndRequestPermissions();
+            openPermission();
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -398,6 +411,36 @@ public class MainActivity extends AppCompatActivity
         };
         AppController.getInstance().getRequestQueue().getCache().invalidate(Url, true);
         AppController.getInstance().addToRequestQueue(jsonget);
+    }
+
+    private void checkAndRequestPermissions() {
+        int writeExtStorage = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int readExtStorage = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+        listPermissionsNeeded = new ArrayList<>();
+        if (writeExtStorage != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (readExtStorage != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+    }
+
+    private void openPermission(){
+        if (!listPermissionsNeeded.isEmpty()) {
+            mRequestPermissionHandler.requestPermission(this,
+                    listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
+                    123, new RequestPermissionHandler.RequestPermissionListener() {
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(MainActivity.this, "Request permission success", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailed() {
+                            Toast.makeText(MainActivity.this, "Request permission failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
     @Override
